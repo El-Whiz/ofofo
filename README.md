@@ -1,5 +1,5 @@
 # ofofo
 OSF Capstone
 
-HOW TO RUN
+HOW TO RUN:
 Download the .html file and open with a browser.
