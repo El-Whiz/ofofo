@@ -130,6 +130,37 @@
   .card-place{font-size:13px;font-weight:600;color:var(--text-soft);margin-bottom:4px;}
   .card-text{font-size:15px;line-height:1.5;margin:0 0 10px 0;}
   .verify-note{font-size:12.5px;color:var(--teal);background:var(--teal-soft);border-radius:var(--radius-sm);padding:8px 10px;margin-bottom:10px;display:flex;gap:6px;align-items:flex-start;}
+  .nextsteps-card{background:var(--surface-2);border:1px solid var(--teal);border-radius:10px;padding:14px 16px;margin-bottom:12px;}
+  .nextsteps-card h4{margin:0 0 10px 0;font-size:14px;font-family:'Fraunces',serif;color:var(--teal);}
+  .nextsteps-row{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line-soft);font-size:12.5px;}
+  .nextsteps-row:last-child{border-bottom:none;}
+  .nextsteps-label{color:var(--text-faint);flex-shrink:0;}
+  .nextsteps-value{color:var(--text);text-align:right;font-weight:600;}
+  .nextsteps-value a{color:var(--teal);text-decoration:underline;}
+  .help-page{padding:20px;display:flex;flex-direction:column;gap:16px;max-width:560px;}
+  .help-card{background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--radius-md);padding:18px;}
+  .help-card.urgent{border-color:var(--red);}
+  .help-card h3{font-family:'Fraunces',serif;font-size:15px;margin:0 0 12px 0;}
+  .help-card p{font-size:12.5px;color:var(--text-soft);margin:0 0 14px 0;line-height:1.4;}
+  .help-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:13px;color:var(--text-soft);}
+  .help-row:last-child{border-bottom:none;}
+  .help-row a{color:var(--red);font-weight:700;text-decoration:underline;}
+  .help-row span:last-child:not(:only-child){color:var(--text);font-weight:600;}
+  .translate-widget{position:relative;margin-top:6px;}
+  .translate-btn{background:none;border:none;color:var(--text-faint);font-size:11px;font-weight:600;cursor:pointer;padding:2px 0;display:inline-flex;align-items:center;gap:4px;}
+  .translate-btn svg{width:12px;height:12px;}
+  .translate-btn:hover{color:var(--realid);}
+  .translate-menu{display:none;position:absolute;top:100%;left:0;margin-top:4px;background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:5px;z-index:20;flex-direction:column;min-width:150px;box-shadow:0 10px 24px rgba(0,0,0,.5);}
+  .translate-menu.open{display:flex;}
+  .translate-menu button{background:none;border:none;color:var(--text-soft);text-align:left;font-size:12px;padding:6px 9px;border-radius:6px;cursor:pointer;}
+  .translate-menu button:hover{background:var(--surface-3);color:var(--text);}
+  .translate-result{font-size:11px;color:var(--realid);margin-top:5px;line-height:1.4;}
+  .translate-result:empty{display:none;}
+  .msg .translate-widget{margin-top:5px;}
+  .msg .translate-btn{color:inherit;opacity:.6;}
+  .msg .translate-btn:hover{opacity:1;}
+  .msg .translate-result{color:inherit;opacity:.85;}
+  .comment .translate-widget{margin-top:4px;}
   .card-actions{display:flex;align-items:center;gap:22px;}
   .action{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text-soft);background:none;border:none;padding:4px 2px;transition:color .12s ease;}
   .action svg{width:18px;height:18px;}
@@ -441,7 +472,7 @@
 <div class="app">
 
   <aside class="side-panel">
-    <div class="logo" onclick="openAdmin()" style="cursor:pointer;" title="Admin"><span class="eyes">👀</span><span class="word brand-font">Ofofo</span></div>
+    <div class="logo" onclick="handleLogoClick()" style="cursor:pointer;" title="Click 3 times for admin"><span class="eyes">👀</span><span class="word brand-font">Ofofo</span></div>
 
     <div class="panel-card profile-card">
       <div class="profile-top">
@@ -471,7 +502,7 @@
   <main class="main">
 
     <div class="mobile-topbar">
-      <span class="logo" onclick="openAdmin()" style="cursor:pointer;" title="Admin"><span class="eyes" style="font-size:24px;">👀</span><span class="word brand-font" style="font-size:18px;">Ofofo</span></span>
+      <span class="logo" onclick="handleLogoClick()" style="cursor:pointer;" title="Click 3 times for admin"><span class="eyes" style="font-size:24px;">👀</span><span class="word brand-font" style="font-size:18px;">Ofofo</span></span>
       <div style="display:flex;gap:10px;position:relative;">
         <button class="back-btn" id="mobileBellBtn" style="position:relative;" onclick="toggleDropdown('notifDrop')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="width:17px;height:17px;"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
         <svg class="avatar back-btn" width="36" height="36" viewBox="0 0 40 40" onclick="toggleDropdown('profileDrop')" style="padding:0;border-radius:50%;"><rect width="40" height="40" rx="20" fill="#e9c46a"/><circle cx="14" cy="17" r="3.4" fill="#15161c"/><circle cx="26" cy="17" r="3.4" fill="#15161c"/><path d="M13 27c3-2 11-2 14 0" stroke="#15161c" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
@@ -632,6 +663,45 @@
       <div class="comment-input-row">
         <input type="text" id="roomCommentInput" placeholder="Add a comment..." onkeydown="if(event.key==='Enter')addRoomComment()">
         <button class="send-btn" onclick="addRoomComment()"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1330" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg></button>
+      </div>
+    </section>
+
+    <!-- HELP -->
+    <section class="view" id="view-help">
+      <div class="topbar" style="display:flex;align-items:center;gap:12px;">
+        <button class="back-btn" onclick="switchTab('feed')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <div><h1>🆘 Need help right now?</h1><p>Emergency contacts and resources — no posting required</p></div>
+      </div>
+      <div class="help-page">
+        <div class="help-card urgent">
+          <h3>🚨 Emergency lines</h3>
+          <div class="help-row"><span>Police</span><a href="tel:112">112</a></div>
+          <div class="help-row"><span>Fire Service</span><a href="tel:112">112</a></div>
+          <div class="help-row"><span>Ambulance / Medical</span><a href="tel:112">112</a></div>
+          <div class="help-row"><span>LASEMA (disaster response)</span><a href="tel:08001122333">0800-112-2333</a></div>
+          <div class="help-row"><span>Road safety (FRSC)</span><a href="tel:122">122</a></div>
+        </div>
+
+        <div class="help-card">
+          <h3>📍 Nearest by category</h3>
+          <div class="help-row"><span>Nearest hospital</span><span>Lagos Island General — 3.1km</span></div>
+          <div class="help-row"><span>Nearest police division</span><span>Ojota Division — 900m</span></div>
+          <div class="help-row"><span>Nearest fire station</span><span>Alausa Fire Station — 2.4km</span></div>
+          <div class="help-row"><span>Nearest shelter</span><span>Ajah Community Hall — 1.2km</span></div>
+        </div>
+
+        <div class="help-card">
+          <h3>🧾 Utility & non-emergency lines</h3>
+          <div class="help-row"><span>Power/water complaints</span><span>0700-1000-1000</span></div>
+          <div class="help-row"><span>Traffic management (LASTMA)</span><span>0700-CALL-LASTMA</span></div>
+          <div class="help-row"><span>Non-emergency police reporting</span><span>0700-CALL-POLICE</span></div>
+        </div>
+
+        <div class="help-card">
+          <h3>🧭 Prefer to talk to someone directly?</h3>
+          <p>Start a live mediated session with a neutral Ofofo mediator, or see what's already being followed nearby.</p>
+          <button class="post-btn" onclick="switchTab('events')">View Live Events</button>
+        </div>
       </div>
     </section>
 
@@ -808,6 +878,10 @@
     <div class="sheet-row" onclick="closeSheet();openCreateInterview();">
       <div class="sheet-icon" style="background:var(--violet-soft);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--violet)" stroke-width="1.8"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v4"/></svg></div>
       <div class="txt"><div class="t">Invite for an interview</div><div class="s">Ask someone on record, on their real name</div></div>
+    </div>
+    <div class="sheet-row" onclick="closeSheet();switchTab('help');">
+      <div class="sheet-icon" style="background:var(--red-soft);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg></div>
+      <div class="txt"><div class="t">I need help right now</div><div class="s">Emergency contacts and resources, no posting required</div></div>
     </div>
   </div>
 </div>
@@ -1094,6 +1168,19 @@
   }
 
   /* ---------- ADMIN ---------- */
+  let logoClickCount = 0;
+  let logoClickTimer = null;
+  function handleLogoClick(){
+    logoClickCount++;
+    if(logoClickTimer) clearTimeout(logoClickTimer);
+    if(logoClickCount >= 3){
+      logoClickCount = 0;
+      clearTimeout(logoClickTimer);
+      openAdmin();
+      return;
+    }
+    logoClickTimer = setTimeout(()=>{ logoClickCount = 0; }, 600);
+  }
   function openAdmin(){
     document.getElementById('adminOverlay').classList.add('open');
     document.getElementById('adminFeedSubtitle').value = siteTextData.feedSubtitle;
@@ -1447,6 +1534,37 @@
     flashSaved(btn);
   }
 
+  let translateUidCounter = 0;
+  const translateLangs = ['Yoruba','Hausa','Igbo','Nigerian Pidgin','French','Arabic','Spanish'];
+  function translateWidgetHTML(){
+    const uid = 'tr' + (translateUidCounter++);
+    return `<div class="translate-widget">
+      <button type="button" class="translate-btn" onclick="event.stopPropagation(); toggleTranslateMenu('${uid}')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z"/></svg>
+        Translate
+      </button>
+      <div class="translate-menu" id="menu-${uid}">
+        ${translateLangs.map(l=>`<button type="button" onclick="event.stopPropagation(); selectTranslateLang('${uid}','${l}')">${l}</button>`).join('')}
+      </div>
+      <div class="translate-result" id="result-${uid}"></div>
+    </div>`;
+  }
+  function toggleTranslateMenu(uid){
+    const target = document.getElementById('menu-'+uid);
+    const isOpen = target.classList.contains('open');
+    document.querySelectorAll('.translate-menu.open').forEach(m=>m.classList.remove('open'));
+    if(!isOpen) target.classList.add('open');
+  }
+  function selectTranslateLang(uid, lang){
+    document.getElementById('menu-'+uid).classList.remove('open');
+    document.getElementById('result-'+uid).innerHTML = `🌐 Showing in <b>${lang}</b> — translation preview isn't wired up in this prototype yet.`;
+  }
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('.translate-widget')){
+      document.querySelectorAll('.translate-menu.open').forEach(m=>m.classList.remove('open'));
+    }
+  });
+
   function postByHTML(handle){
     const color = anonAvatar[handle] || '#a78bfa';
     return `<div class="post-by"><svg class="mini-avatar" viewBox="0 0 40 40"><rect width="40" height="40" rx="14" fill="${color}"/></svg><b>${handle}</b></div>`;
@@ -1656,6 +1774,7 @@
         </div>
         <div class="card-place">${d.place}</div>
         <p class="card-text">${d.text}</p>
+        ${translateWidgetHTML()}
         ${mediaBlockHTML(d.media)}
         ${d.note ? `<div class="verify-note">👀 ${d.note}</div>` : ''}
         <div class="card-actions">
@@ -1728,7 +1847,7 @@
 
   function renderChatMsgs(name){
     const data = chatData[name] || [];
-    document.getElementById('chatMsgs').innerHTML = data.length ? data.map(m=>`<div class="msg ${m.from}">${m.text}</div>`).join('') : `<div class="rail-empty" style="padding:20px;">Say hi 👋 — start the conversation.</div>`;
+    document.getElementById('chatMsgs').innerHTML = data.length ? data.map(m=>`<div class="msg ${m.from}"><div class="msg-text">${m.text}</div>${translateWidgetHTML()}</div>`).join('') : `<div class="rail-empty" style="padding:20px;">Say hi 👋 — start the conversation.</div>`;
     const box = document.getElementById('chatMsgs');
     box.scrollTop = box.scrollHeight;
   }
@@ -1780,7 +1899,8 @@
     if(msgs.querySelector('.rail-empty')) msgs.innerHTML = '';
     const bubble = document.createElement('div');
     bubble.className = 'msg me';
-    bubble.textContent = text;
+    bubble.innerHTML = `<div class="msg-text"></div>${translateWidgetHTML()}`;
+    bubble.querySelector('.msg-text').textContent = text;
     msgs.appendChild(bubble);
     msgs.scrollTop = msgs.scrollHeight;
     input.value = '';
@@ -1803,7 +1923,8 @@
           const reply = scriptedReplies.saltyIgloo;
           const replyEl = document.createElement('div');
           replyEl.className = 'msg them';
-          replyEl.textContent = reply;
+          replyEl.innerHTML = `<div class="msg-text"></div>${translateWidgetHTML()}`;
+          replyEl.querySelector('.msg-text').textContent = reply;
           msgs.appendChild(replyEl);
           msgs.scrollTop = msgs.scrollHeight;
           if(!chatData['SaltyIgloo']) chatData['SaltyIgloo'] = [];
@@ -2024,6 +2145,7 @@
           </div>
           <p class="card-text" style="font-weight:600;">${ev.title}</p>
           <div class="card-place">${ev.meta}</div>
+          ${translateWidgetHTML()}
           ${mediaBlockHTML(ev.media)}
           <div class="card-actions">
             ${heartButtonHTML('event', ev.id, ev.likedByMe, ev.likes, true)}
@@ -2073,6 +2195,54 @@
     }
   }
 
+  const nextStepsMap = {
+    'Flood': {icon:'🌊', items:[
+      {label:'Nearest designated shelter', value:'Ajah Community Hall — 1.2km away'},
+      {label:'Avoid', value:'Lekki-Epe Expressway inbound until further notice'},
+      {label:'Disaster response (LASEMA)', value:'0800-112-2333', tel:'08001122333'},
+    ]},
+    'Fire': {icon:'🔥', items:[
+      {label:'Lagos Fire Service', value:'112 / 0803-000-0000', tel:'112'},
+      {label:'Nearest fire station', value:'Alausa Fire Station — 2.4km away'},
+      {label:'If trapped', value:'Stay low, cover your mouth, move away from the building'},
+    ]},
+    'Accident': {icon:'🚑', items:[
+      {label:'Ambulance / Medical emergency', value:'112', tel:'112'},
+      {label:'Nearest hospital', value:'Lagos Island General Hospital — 3.1km away'},
+      {label:'Report to road safety (FRSC)', value:'122', tel:'122'},
+    ]},
+    'Security': {icon:'🚨', items:[
+      {label:'Police emergency line', value:'112', tel:'112'},
+      {label:'Nearest police division', value:'Ojota Division — 900m away'},
+      {label:'Non-emergency reporting', value:'0700-CALL-POLICE'},
+    ]},
+    'Power/Water': {icon:'💡', items:[
+      {label:'Utility complaint line', value:'0700-1000-1000'},
+      {label:'Reference for this outage', value:'Ticket #OFO-'+Math.floor(Math.random()*90000+10000)},
+      {label:'Track resolution', value:'Follow this post for status updates'},
+    ]},
+    'Road block': {icon:'🚧', items:[
+      {label:'Suggested detour', value:'Check the map in Spot for nearby alternate routes'},
+      {label:'Traffic management (LASTMA)', value:'0700-CALL-LASTMA'},
+      {label:'Report a new blockage', value:'Post an update from the + button'},
+    ]},
+    'Other': {icon:'ℹ️', items:[
+      {label:'General emergency line', value:'112', tel:'112'},
+      {label:'Not sure who to contact?', value:'Open "I need help right now" from the + menu'},
+    ]},
+  };
+  function nextStepsCardHTML(cat){
+    const entry = nextStepsMap[cat] || nextStepsMap['Other'];
+    return `<div class="nextsteps-card">
+      <h4>${entry.icon} What to do now</h4>
+      ${entry.items.map(it=>`
+        <div class="nextsteps-row">
+          <span class="nextsteps-label">${it.label}</span>
+          <span class="nextsteps-value">${it.tel ? `<a href="tel:${it.tel}">${it.value}</a>` : it.value}</span>
+        </div>`).join('')}
+    </div>`;
+  }
+
   function renderPostDetail(){
     const body = document.getElementById('postDetailBody');
     if(!currentDetail){ body.innerHTML = ''; return; }
@@ -2092,8 +2262,10 @@
             </div>
             <div class="card-place">${d.place}</div>
             <p class="card-text">${d.text}</p>
+            ${translateWidgetHTML()}
             ${mediaBlockHTML(d.media)}
             ${d.note ? `<div class="verify-note">👀 ${d.note}</div>` : ''}
+            ${d.badge==='verified' ? nextStepsCardHTML(d.cat) : ''}
             <div class="card-actions">
               ${heartButtonHTML('report', d.id, d.likedByMe, d.likes, false)}
               ${seeThisTooButtonHTML(d.id, d.corroboratedByMe, d.n, false)}
@@ -2125,6 +2297,7 @@
           </div>
           <p class="card-text" style="font-weight:600;">${ev.title}</p>
           <div class="card-place">${ev.meta}</div>
+          ${translateWidgetHTML()}
           ${mediaBlockHTML(ev.media)}
           <div class="card-actions">
             ${heartButtonHTML('event', ev.id, ev.likedByMe, ev.likes, false)}
@@ -2149,7 +2322,7 @@
     if(!listEl) return;
     listEl.innerHTML = comments.length ? comments.map(c=>`
       <div class="comment"><svg class="blob-avatar" viewBox="0 0 40 40" style="width:32px;height:32px;flex-shrink:0;"><rect width="40" height="40" rx="12" fill="${anonAvatar[c.name]||'#6b5b95'}"/></svg>
-      <div><span class="n">${c.name}</span><br><span class="c">${c.text}</span></div></div>`).join('')
+      <div><span class="n">${c.name}</span><br><span class="c">${c.text}</span>${translateWidgetHTML()}</div></div>`).join('')
       : `<div class="rail-empty" style="padding:6px 0 14px 0;">No comments yet — be the first to say something.</div>`;
   }
   function addDetailComment(){
@@ -2204,7 +2377,7 @@
     document.getElementById('roomCommentsList').innerHTML = roomComments.map(c=>`
       <div class="comment">
         <svg class="blob-avatar" viewBox="0 0 40 40" style="width:28px;height:28px;flex-shrink:0;border-radius:${c.type==='real'?'50%':'10px'};"><rect width="40" height="40" rx="${c.type==='real'?'20':'10'}" fill="${c.color}"/></svg>
-        <div><span class="n">${c.name}<span class="idtag ${c.type}">${c.type==='real'?'Real name':'Anonymous'}</span></span><br><span class="c">${c.text}</span></div>
+        <div><span class="n">${c.name}<span class="idtag ${c.type}">${c.type==='real'?'Real name':'Anonymous'}</span></span><br><span class="c">${c.text}</span>${translateWidgetHTML()}</div>
       </div>`).join('');
   }
   function addRoomComment(){
